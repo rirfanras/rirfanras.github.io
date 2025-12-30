@@ -48,16 +48,23 @@
         }
 
         /* Garis Timeline untuk Pengalaman */
+        .timeline-line {
+            position: relative;
+        }
+        
         .timeline-line::before {
             content: '';
             position: absolute;
             top: 0;
             bottom: 0;
-            left: 20px; /* Default mobile */
+            /* MOBILE: Garis di kiri (20px dari tepi = tengah icon 40px) */
+            left: 20px; 
             width: 2px;
             background: linear-gradient(to bottom, transparent, #e2e8f0, transparent);
+            z-index: 0;
         }
 
+        /* DESKTOP: Garis di tengah */
         @media (min-width: 768px) {
             .timeline-line::before {
                 left: 50%;
@@ -71,10 +78,10 @@
     <!-- HEADER / NAVBAR -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-20 bg-opacity-90 backdrop-blur-md">
         <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="font-bold text-xl tracking-tight text-blue-900">
+            <div class="font-bold text-lg md:text-xl tracking-tight text-blue-900 truncate">
                 Portfolio <span class="text-blue-500">Saya</span>
             </div>
-            <div class="flex gap-4">
+            <div class="flex gap-4 shrink-0">
                 <!-- Link Sosmed akan diisi oleh JS -->
                 <a id="nav-github" href="#" target="_blank" class="text-slate-400 hover:text-slate-900 transition-colors">
                     <i data-lucide="github" width="20"></i>
@@ -86,38 +93,38 @@
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 py-10 md:py-16 flex-grow w-full">
+    <main class="max-w-5xl mx-auto px-4 py-8 md:py-16 flex-grow w-full overflow-x-hidden">
         
         <!-- BAGIAN PROFIL -->
-        <div class="text-center mb-12">
+        <div class="text-center mb-10 md:mb-12">
             <!-- FOTO PROFIL: Mengambil dari root folder 'fotoprofil.jpg' -->
-            <img src="fotoprofil.jpg" alt="Foto Profil" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover shadow-xl border-4 border-white">
+            <img src="fotoprofil.jpg" alt="Foto Profil" class="w-28 h-28 md:w-32 md:h-32 rounded-full mx-auto mb-6 object-cover shadow-xl border-4 border-white">
 
-            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-2" id="profile-name">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-2 break-words leading-tight px-2" id="profile-name">
                 <!-- Nama akan muncul di sini -->
             </h1>
-            <p class="text-xl text-blue-600 font-medium mb-4" id="profile-role">
+            <p class="text-lg md:text-xl text-blue-600 font-medium mb-4" id="profile-role">
                 <!-- Role akan muncul di sini -->
             </p>
             <div class="flex items-center justify-center gap-2 text-slate-500 text-sm mb-6">
                 <i data-lucide="map-pin" width="16"></i>
                 <span id="profile-location"><!-- Lokasi --></span>
             </div>
-            <p class="max-w-2xl mx-auto text-slate-600 leading-relaxed" id="profile-about">
+            <p class="max-w-2xl mx-auto text-slate-600 leading-relaxed px-2 text-sm md:text-base" id="profile-about">
                 <!-- Deskripsi -->
             </p>
         </div>
 
         <!-- NAVIGASI TAB -->
-        <div class="flex flex-wrap justify-center gap-4 mb-12 sticky top-20 z-10 py-4 bg-slate-50/90 backdrop-blur-sm -mx-4 px-4">
-            <button onclick="switchTab('projects')" id="btn-projects" class="tab-btn active flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm md:text-base bg-blue-600 text-white shadow-lg">
-                <i data-lucide="code" width="18"></i> Proyek Sekolah
+        <div class="flex flex-wrap justify-center gap-3 md:gap-4 mb-10 md:mb-12 sticky top-[73px] z-10 py-3 bg-slate-50/95 backdrop-blur-sm -mx-4 px-4 border-b border-slate-200/50 md:border-none">
+            <button onclick="switchTab('projects')" id="btn-projects" class="tab-btn active flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full font-bold text-xs md:text-base bg-blue-600 text-white shadow-lg">
+                <i data-lucide="code" class="w-4 h-4 md:w-[18px] md:h-[18px]"></i> Proyek
             </button>
-            <button onclick="switchTab('experience')" id="btn-experience" class="tab-btn flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm md:text-base bg-white text-slate-500 hover:bg-slate-100 hover:text-blue-600 shadow-sm">
-                <i data-lucide="briefcase" width="18"></i> Organisasi
+            <button onclick="switchTab('experience')" id="btn-experience" class="tab-btn flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full font-bold text-xs md:text-base bg-white text-slate-500 hover:bg-slate-100 hover:text-blue-600 shadow-sm">
+                <i data-lucide="briefcase" class="w-4 h-4 md:w-[18px] md:h-[18px]"></i> Organisasi
             </button>
-            <button onclick="switchTab('about')" id="btn-about" class="tab-btn flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm md:text-base bg-white text-slate-500 hover:bg-slate-100 hover:text-blue-600 shadow-sm">
-                <i data-lucide="user" width="18"></i> Tentang
+            <button onclick="switchTab('about')" id="btn-about" class="tab-btn flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full font-bold text-xs md:text-base bg-white text-slate-500 hover:bg-slate-100 hover:text-blue-600 shadow-sm">
+                <i data-lucide="user" class="w-4 h-4 md:w-[18px] md:h-[18px]"></i> Tentang
             </button>
         </div>
 
@@ -127,12 +134,12 @@
         </div>
 
         <!-- BAGIAN KONTAK -->
-        <div class="mt-24 mb-10 text-center">
-            <h2 class="text-2xl font-bold text-slate-900 mb-4">Mari Berteman & Belajar Bareng!</h2>
-            <p class="text-slate-600 mb-8 max-w-xl mx-auto">
+        <div class="mt-20 md:mt-24 mb-10 text-center px-4">
+            <h2 class="text-xl md:text-2xl font-bold text-slate-900 mb-4">Mari Berteman & Belajar Bareng!</h2>
+            <p class="text-slate-600 mb-8 max-w-xl mx-auto text-sm md:text-base">
                 Saya senang berdiskusi tentang tugas sekolah, hobi, atau proyek belajar bareng. Jangan ragu untuk menyapa!
             </p>
-            <a id="btn-contact" href="#" class="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full hover:bg-slate-800 transition-all shadow-xl shadow-blue-100 hover:scale-105 active:scale-95">
+            <a id="btn-contact" href="#" class="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 md:px-8 md:py-4 rounded-full hover:bg-slate-800 transition-all shadow-xl shadow-blue-100 hover:scale-105 active:scale-95 text-sm md:text-base">
                 <i data-lucide="mail" width="20"></i>
                 <span class="font-medium">Kirim Email</span>
             </a>
@@ -141,7 +148,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 mt-10 py-8">
+    <footer class="bg-white border-t border-slate-200 mt-auto py-8">
         <div class="max-w-5xl mx-auto px-4 text-center text-slate-500 text-sm">
             <p>&copy; <span id="year"></span> <span id="footer-name"></span>. Portofolio Saya.</p>
         </div>
@@ -205,10 +212,8 @@
         function init() {
             // Render Profil
             document.getElementById('profile-name').textContent = profile.name;
-            // Baris ini dihapus/komentar karena kita sekarang menggunakan foto, bukan inisial
-            // document.getElementById('profile-initial').textContent = profile.name.charAt(0);
             document.getElementById('profile-role').textContent = profile.role;
-            document.getElementById('profile-location').textContent = " " + profile.location; // spasi untuk ikon
+            document.getElementById('profile-location').textContent = " " + profile.location; 
             document.getElementById('profile-about').textContent = profile.about;
             
             // Render Link Footer & Kontak
@@ -230,11 +235,13 @@
             // Update tombol aktif
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => {
-                btn.className = 'tab-btn flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm md:text-base bg-white text-slate-500 hover:bg-slate-100 hover:text-blue-600 shadow-sm';
+                // Reset semua tombol ke style default
+                btn.className = 'tab-btn flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full font-bold text-xs md:text-base bg-white text-slate-500 hover:bg-slate-100 hover:text-blue-600 shadow-sm';
             });
             
+            // Set tombol aktif
             const activeBtn = document.getElementById(`btn-${tabName}`);
-            activeBtn.className = 'tab-btn active flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm md:text-base bg-blue-600 text-white shadow-lg';
+            activeBtn.className = 'tab-btn active flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full font-bold text-xs md:text-base bg-blue-600 text-white shadow-lg';
 
             // Render Konten
             const contentArea = document.getElementById('content-area');
@@ -247,21 +254,20 @@
                 
                 // Loop Projects
                 projects.forEach(project => {
-                    // Generate HTML untuk tags
                     const tagsHtml = project.tags.map(tag => 
-                        `<span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-md font-medium">${tag}</span>`
+                        `<span class="text-[10px] md:text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-md font-medium">${tag}</span>`
                     ).join('');
 
                     htmlContent += `
                         <div class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-xl hover:border-blue-100 transition-all duration-300 flex flex-col h-full">
                             <div class="flex justify-between items-start mb-4">
-                                <div class="text-xs font-bold px-3 py-1 rounded-full ${project.statusColor}">
+                                <div class="text-[10px] md:text-xs font-bold px-3 py-1 rounded-full ${project.statusColor}">
                                     ${project.status}
                                 </div>
                                 <i data-lucide="code" class="text-slate-300 group-hover:text-blue-500 transition-colors" width="24"></i>
                             </div>
                             
-                            <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
+                            <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
                                 ${project.title}
                             </h3>
                             <p class="text-slate-600 mb-6 text-sm leading-relaxed flex-grow">
@@ -273,7 +279,7 @@
                                     ${tagsHtml}
                                 </div>
                                 
-                                <a href="${project.link}" class="w-full inline-flex items-center justify-center gap-2 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white py-3 rounded-xl font-medium transition-all duration-300">
+                                <a href="${project.link}" class="w-full inline-flex items-center justify-center gap-2 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white py-3 rounded-xl font-medium transition-all duration-300 text-sm md:text-base">
                                     Lihat Tugas <i data-lucide="external-link" width="16"></i>
                                 </a>
                             </div>
@@ -287,38 +293,46 @@
                         <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
                             <span class="text-2xl font-light text-slate-400">+</span>
                         </div>
-                        <h3 class="font-semibold mb-1">Slot Tugas Baru</h3>
-                        <p class="text-sm max-w-xs">Tambahkan tugas sekolah atau proyek belajar mandiri di array <code>projects</code>.</p>
+                        <h3 class="font-semibold mb-1 text-sm md:text-base">Slot Tugas Baru</h3>
+                        <p class="text-xs md:text-sm max-w-xs">Tambahkan tugas sekolah di array <code>projects</code>.</p>
                     </div>
                 </div>`;
             } 
             else if (tabName === 'experience') {
-                htmlContent = `<div class="fade-in max-w-3xl mx-auto"><div class="space-y-8 relative timeline-line">`;
+                htmlContent = `<div class="fade-in max-w-3xl mx-auto"><div class="space-y-8 relative timeline-line pb-10">`;
                 
                 experience.forEach((exp, index) => {
-                    const isEven = index % 2 !== 0; // Untuk layout zigzag di desktop jika diinginkan, tapi kita pakai linear sederhana untuk kemudahan
+                    const isEven = index % 2 === 0;
                     
                     htmlContent += `
-                        <div class="relative flex items-center justify-between md:justify-normal ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''} group">
-                            <!-- Icon on timeline -->
-                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-100 text-slate-500 shadow shrink-0 md:order-1 ${index % 2 !== 0 ? 'md:-translate-x-1/2' : 'md:translate-x-1/2 md:ml-auto md:mr-0'} z-10 group-hover:bg-blue-600 group-hover:text-white transition-colors" style="${index % 2 === 0 ? 'margin-left: auto; margin-right: auto;' : 'margin-left: auto; margin-right: auto;'} position: absolute; left: 0; right: 0;">
+                        <div class="relative flex flex-col md:flex-row items-center md:justify-between group">
+                            
+                            <!-- ICON TIMELINE: 
+                                 Mobile: Absolute Left-0 (sejajar garis kiri 20px). 
+                                 Desktop: Absolute Left-1/2 (sejajar garis tengah). -->
+                            <div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-100 text-slate-500 shadow z-10 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                                 <i data-lucide="briefcase" width="18"></i>
                             </div>
                             
-                            <!-- Wrapper for Positioning -->
-                             <div class="w-full flex ${index % 2 !== 0 ? 'md:justify-start' : 'md:justify-end'}">
-                                <!-- Content Card -->
-                                <div class="w-[calc(100%-3rem)] md:w-[calc(50%-2rem)] bg-white p-6 rounded-2xl border border-slate-100 shadow-sm group-hover:shadow-md transition-all ml-12 md:ml-0">
-                                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
-                                        <h3 class="font-bold text-slate-900">${exp.role}</h3>
-                                        <span class="text-xs font-semibold bg-blue-50 text-blue-600 px-2 py-1 rounded mt-1 sm:mt-0">${exp.period}</span>
+                            <!-- KONTEN: 
+                                 Mobile: Padding left 12 (untuk memberi ruang icon). 
+                                 Desktop: Menggunakan grid logic (50% width). -->
+                            <div class="w-full pl-12 md:pl-0 md:w-1/2 ${!isEven ? 'md:ml-auto md:pl-12' : 'md:pr-12 md:text-right'}">
+                                <div class="bg-white p-5 md:p-6 rounded-2xl border border-slate-100 shadow-sm group-hover:shadow-md transition-all">
+                                    <div class="flex flex-col ${!isEven ? '' : 'md:items-end'} sm:flex-row justify-between items-start sm:items-center mb-2 gap-2">
+                                        <h3 class="font-bold text-slate-900 text-base md:text-lg">${exp.role}</h3>
+                                        <span class="text-[10px] md:text-xs font-semibold bg-blue-50 text-blue-600 px-2 py-1 rounded inline-block whitespace-nowrap">${exp.period}</span>
                                     </div>
                                     <div class="text-sm font-medium text-slate-500 mb-3">${exp.company}</div>
-                                    <p class="text-slate-600 text-sm leading-relaxed">
+                                    <p class="text-slate-600 text-sm leading-relaxed text-left">
                                         ${exp.desc}
                                     </p>
                                 </div>
                             </div>
+                            
+                            <!-- SPACER UNTUK BALANCING DI DESKTOP -->
+                            <div class="hidden md:block md:w-1/2"></div>
+
                         </div>
                     `;
                 });
@@ -331,12 +345,12 @@
                 ).join('');
 
                 htmlContent = `
-                    <div class="fade-in max-w-3xl mx-auto bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
-                        <h3 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                    <div class="fade-in max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-2xl border border-slate-100 shadow-sm">
+                        <h3 class="text-xl md:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                             <i data-lucide="user" class="text-blue-600"></i>
                             Tentang Saya
                         </h3>
-                        <div class="space-y-4 text-slate-600 leading-relaxed">
+                        <div class="space-y-4 text-slate-600 leading-relaxed text-sm md:text-base">
                             <p>
                                 Halo! Saya ${profile.name}, seorang pelajar di ${profile.location}. 
                                 Saat ini saya sedang fokus mengembangkan minat saya di bidang teknologi dan desain.
