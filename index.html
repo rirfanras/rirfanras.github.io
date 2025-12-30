@@ -1,20 +1,400 @@
 <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R Irfan Rasyid</title>
+    
+    <!-- Tailwind CSS (Framework Styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons (Untuk Ikon) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Font Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<html>
-  <head>
-    <title>Homepage</title>
-    <meta name=viewport content="width=device-width, initial-scale=1.0">
-  </head>
-  <body>
-    <a href="https://notvextz.github.io/ytindosrw">
-      <button title="Rewind Indonesia Song Only" style="border_radius:5px;cursor:pointer;height:50px;width:50px;">
-        Project 1
-      </button>
-    </a>
-    <a href="https://notvextz.github.io/calc">
-      <button title="Calculator" style="border_radius:5px;cursor:pointer;height:50px;width:50px;">
-        Project 2
-      </button>
-    </a>
-  </body>
+    <!-- BAGIAN STYLE (CSS) -->
+    <!-- Jika ingin dipisah, copy isi tag ini ke file style.css -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Animasi Fade In */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Style untuk Tab Aktif/Tidak Aktif */
+        .tab-btn.active {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+
+        /* Garis Timeline untuk Pengalaman */
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 20px; /* Default mobile */
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, #e2e8f0, transparent);
+        }
+
+        @media (min-width: 768px) {
+            .timeline-line::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 selection:bg-blue-100 min-h-screen flex flex-col">
+
+    <!-- HEADER / NAVBAR -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-20 bg-opacity-90 backdrop-blur-md">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="font-bold text-xl tracking-tight text-blue-900">
+                Portfolio<span class="text-blue-500">.</span>
+            </div>
+            <div class="flex gap-4">
+                <!-- Link Sosmed akan diisi oleh JS -->
+                <a id="nav-github" href="#" target="_blank" class="text-slate-400 hover:text-slate-900 transition-colors">
+                    <i data-lucide="github" width="20"></i>
+                </a>
+                <a id="nav-instagram" href="#" target="_blank" class="text-slate-400 hover:text-pink-600 transition-colors">
+                    <i data-lucide="instagram" width="20"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-10 md:py-16 flex-grow w-full">
+        
+        <!-- BAGIAN PROFIL -->
+        <div class="text-center mb-12">
+            <!-- FOTO PROFIL: Mengambil dari root folder 'fotoprofil.jpg' -->
+            <img src="fotoprofil.jpg" alt="Foto Profil" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover shadow-xl border-4 border-white">
+
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-2" id="profile-name">
+                <!-- Nama akan muncul di sini -->
+            </h1>
+            <p class="text-xl text-blue-600 font-medium mb-4" id="profile-role">
+                <!-- Role akan muncul di sini -->
+            </p>
+            <div class="flex items-center justify-center gap-2 text-slate-500 text-sm mb-6">
+                <i data-lucide="map-pin" width="16"></i>
+                <span id="profile-location"><!-- Lokasi --></span>
+            </div>
+            <p class="max-w-2xl mx-auto text-slate-600 leading-relaxed" id="profile-about">
+                <!-- Deskripsi -->
+            </p>
+        </div>
+
+        <!-- NAVIGASI TAB -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12 sticky top-20 z-10 py-4 bg-slate-50/90 backdrop-blur-sm -mx-4 px-4">
+            <button onclick="switchTab('projects')" id="btn-projects" class="tab-btn active flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm md:text-base bg-blue-600 text-white shadow-lg">
+                <i data-lucide="code" width="18"></i> Proyek Sekolah
+            </button>
+            <button onclick="switchTab('experience')" id="btn-experience" class="tab-btn flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm md:text-base bg-white text-slate-500 hover:bg-slate-100 hover:text-blue-600 shadow-sm">
+                <i data-lucide="briefcase" width="18"></i> Organisasi
+            </button>
+            <button onclick="switchTab('about')" id="btn-about" class="tab-btn flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm md:text-base bg-white text-slate-500 hover:bg-slate-100 hover:text-blue-600 shadow-sm">
+                <i data-lucide="user" width="18"></i> Tentang
+            </button>
+        </div>
+
+        <!-- AREA KONTEN (ISI TAB AKAN DI-RENDER DI SINI) -->
+        <div id="content-area" class="min-h-[400px]">
+            <!-- Konten diisi oleh JavaScript -->
+        </div>
+
+        <!-- BAGIAN KONTAK -->
+        <div class="mt-24 mb-10 text-center">
+            <h2 class="text-2xl font-bold text-slate-900 mb-4">Mari Berteman & Belajar Bareng!</h2>
+            <p class="text-slate-600 mb-8 max-w-xl mx-auto">
+                Saya senang berdiskusi tentang tugas sekolah, hobi, atau proyek belajar bareng. Jangan ragu untuk menyapa!
+            </p>
+            <a id="btn-contact" href="#" class="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full hover:bg-slate-800 transition-all shadow-xl shadow-blue-100 hover:scale-105 active:scale-95">
+                <i data-lucide="mail" width="20"></i>
+                <span class="font-medium">Kirim Email</span>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 mt-10 py-8">
+        <div class="max-w-5xl mx-auto px-4 text-center text-slate-500 text-sm">
+            <p>&copy; <span id="year"></span> <span id="footer-name"></span>. Portofolio Saya.</p>
+        </div>
+    </footer>
+
+    <!-- BAGIAN SCRIPT (JAVASCRIPT) -->
+    <!-- Jika ingin dipisah, copy isi tag ini ke file script.js -->
+    <script>
+        // ==========================================
+        // 1. DATA PENGGUNA (EDIT DI SINI)
+        // ==========================================
+        
+        const profile = {
+            name: "R Irfan Rasyid Adjistama",
+            role: "Pelajar",
+            location: "Sukoharjo, Jawa Tengah",
+            about: "Saya adalah pelajar yang memiliki ketertarikan besar di dunia teknologi dan pemrograman. Saya aktif belajar membuat aplikasi web dan senang berkolaborasi dalam proyek tim untuk mengembangkan keterampilan saya.",
+            email: "irfanrasr@gmail.com",
+            github: "github.com/fanzyygg",
+            instagram: "instagram.com/rfanzzs_"
+        };
+
+        const projects = [
+            {
+                id: 1,
+                title: "Website Profil Sekolah",
+                description: "Proyek tugas akhir semester membuat website profil sekolah yang responsif.",
+                tags: ["HTML", "CSS", "JavaScript"],
+                link: "#",
+                status: "Selesai",
+                statusColor: "bg-green-100 text-green-700"
+            },
+            {
+                id: 2,
+                title: "Kalkulator Sederhana",
+                description: "Aplikasi kalkulator berbasis web untuk melatih logika pemrograman dasar.",
+                tags: ["JavaScript", "DOM Manipulation"],
+                link: "#",
+                status: "Selesai",
+                statusColor: "bg-green-100 text-green-700"
+            },
+            {
+                id: 3,
+                title: "Aplikasi To-Do List",
+                description: "Proyek latihan mandiri untuk manajemen tugas harian menggunakan React pemula.",
+                tags: ["React", "CSS"],
+                link: "#",
+                status: "Dalam Pembelajaran",
+                statusColor: "bg-amber-100 text-amber-700"
+            },
+            {
+                id: 4,
+                title: "Desain UI Aplikasi Mobile",
+                description: "Konsep desain antarmuka untuk aplikasi pengingat jadwal pelajaran.",
+                tags: ["Figma", "UI/UX"],
+                link: "#",
+                status: "Konsep",
+                statusColor: "bg-amber-100 text-amber-700"
+            }
+        ];
+
+        const experience = [
+            {
+                id: 1,
+                role: "Ketua Ekstrakurikuler Komputer",
+                company: "SMA Negeri X",
+                period: "2023 - Sekarang",
+                desc: "Mengkoordinir kegiatan belajar bersama anggota klub dan mengadakan workshop dasar coding."
+            },
+            {
+                id: 2,
+                role: "Panitia Divisi Dokumentasi",
+                company: "Festival Sekolah Tahunan",
+                period: "2023",
+                desc: "Bertanggung jawab atas dokumentasi foto dan video selama acara berlangsung serta mengelola konten media sosial."
+            },
+            {
+                id: 3,
+                role: "Peserta Bootcamp Coding",
+                company: "Program Belajar Online",
+                period: "2022",
+                desc: "Mengikuti pelatihan intensif dasar-dasar pengembangan web selama 3 bulan."
+            }
+        ];
+
+        const skills = ["HTML & CSS Dasar", "JavaScript", "Bahasa Inggris", "Desain Grafis", "Kerjasama Tim", "Microsoft Office"];
+
+        // ==========================================
+        // 2. LOGIKA APLIKASI
+        // ==========================================
+
+        // Fungsi untuk menginisialisasi halaman
+        function init() {
+            // Render Profil
+            document.getElementById('profile-name').textContent = profile.name;
+            // Baris ini dihapus/komentar karena kita sekarang menggunakan foto, bukan inisial
+            // document.getElementById('profile-initial').textContent = profile.name.charAt(0);
+            document.getElementById('profile-role').textContent = profile.role;
+            document.getElementById('profile-location').textContent = " " + profile.location; // spasi untuk ikon
+            document.getElementById('profile-about').textContent = profile.about;
+            
+            // Render Link Footer & Kontak
+            document.getElementById('nav-github').href = `https://${profile.github}`;
+            document.getElementById('nav-instagram').href = `https://${profile.instagram}`;
+            document.getElementById('btn-contact').href = `mailto:${profile.email}`;
+            document.getElementById('year').textContent = new Date().getFullYear();
+            document.getElementById('footer-name').textContent = profile.name;
+
+            // Render Tab Awal
+            switchTab('projects');
+            
+            // Inisialisasi Ikon Lucide
+            lucide.createIcons();
+        }
+
+        // Fungsi Ganti Tab
+        function switchTab(tabName) {
+            // Update tombol aktif
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.className = 'tab-btn flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm md:text-base bg-white text-slate-500 hover:bg-slate-100 hover:text-blue-600 shadow-sm';
+            });
+            
+            const activeBtn = document.getElementById(`btn-${tabName}`);
+            activeBtn.className = 'tab-btn active flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm md:text-base bg-blue-600 text-white shadow-lg';
+
+            // Render Konten
+            const contentArea = document.getElementById('content-area');
+            contentArea.innerHTML = ''; // Bersihkan konten lama
+            
+            let htmlContent = '';
+
+            if (tabName === 'projects') {
+                htmlContent = `<div class="fade-in grid grid-cols-1 md:grid-cols-2 gap-6">`;
+                
+                // Loop Projects
+                projects.forEach(project => {
+                    // Generate HTML untuk tags
+                    const tagsHtml = project.tags.map(tag => 
+                        `<span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-md font-medium">${tag}</span>`
+                    ).join('');
+
+                    htmlContent += `
+                        <div class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-xl hover:border-blue-100 transition-all duration-300 flex flex-col h-full">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="text-xs font-bold px-3 py-1 rounded-full ${project.statusColor}">
+                                    ${project.status}
+                                </div>
+                                <i data-lucide="code" class="text-slate-300 group-hover:text-blue-500 transition-colors" width="24"></i>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
+                                ${project.title}
+                            </h3>
+                            <p class="text-slate-600 mb-6 text-sm leading-relaxed flex-grow">
+                                ${project.description}
+                            </p>
+
+                            <div class="mt-auto">
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    ${tagsHtml}
+                                </div>
+                                
+                                <a href="${project.link}" class="w-full inline-flex items-center justify-center gap-2 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white py-3 rounded-xl font-medium transition-all duration-300">
+                                    Lihat Tugas <i data-lucide="external-link" width="16"></i>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Tambah Kartu Kosong
+                htmlContent += `
+                    <div class="border-2 border-dashed border-slate-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center text-slate-400 min-h-[300px] hover:border-blue-300 hover:bg-blue-50/50 transition-all cursor-pointer">
+                        <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                            <span class="text-2xl font-light text-slate-400">+</span>
+                        </div>
+                        <h3 class="font-semibold mb-1">Slot Tugas Baru</h3>
+                        <p class="text-sm max-w-xs">Tambahkan tugas sekolah atau proyek belajar mandiri di array <code>projects</code>.</p>
+                    </div>
+                </div>`;
+            } 
+            else if (tabName === 'experience') {
+                htmlContent = `<div class="fade-in max-w-3xl mx-auto"><div class="space-y-8 relative timeline-line">`;
+                
+                experience.forEach((exp, index) => {
+                    const isEven = index % 2 !== 0; // Untuk layout zigzag di desktop jika diinginkan, tapi kita pakai linear sederhana untuk kemudahan
+                    
+                    htmlContent += `
+                        <div class="relative flex items-center justify-between md:justify-normal ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''} group">
+                            <!-- Icon on timeline -->
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-100 text-slate-500 shadow shrink-0 md:order-1 ${index % 2 !== 0 ? 'md:-translate-x-1/2' : 'md:translate-x-1/2 md:ml-auto md:mr-0'} z-10 group-hover:bg-blue-600 group-hover:text-white transition-colors" style="${index % 2 === 0 ? 'margin-left: auto; margin-right: auto;' : 'margin-left: auto; margin-right: auto;'} position: absolute; left: 0; right: 0;">
+                                <i data-lucide="briefcase" width="18"></i>
+                            </div>
+                            
+                            <!-- Wrapper for Positioning -->
+                             <div class="w-full flex ${index % 2 !== 0 ? 'md:justify-start' : 'md:justify-end'}">
+                                <!-- Content Card -->
+                                <div class="w-[calc(100%-3rem)] md:w-[calc(50%-2rem)] bg-white p-6 rounded-2xl border border-slate-100 shadow-sm group-hover:shadow-md transition-all ml-12 md:ml-0">
+                                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
+                                        <h3 class="font-bold text-slate-900">${exp.role}</h3>
+                                        <span class="text-xs font-semibold bg-blue-50 text-blue-600 px-2 py-1 rounded mt-1 sm:mt-0">${exp.period}</span>
+                                    </div>
+                                    <div class="text-sm font-medium text-slate-500 mb-3">${exp.company}</div>
+                                    <p class="text-slate-600 text-sm leading-relaxed">
+                                        ${exp.desc}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                htmlContent += `</div></div>`;
+            }
+            else if (tabName === 'about') {
+                const skillsHtml = skills.map(skill => 
+                    `<div class="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium border border-slate-200">${skill}</div>`
+                ).join('');
+
+                htmlContent = `
+                    <div class="fade-in max-w-3xl mx-auto bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                            <i data-lucide="user" class="text-blue-600"></i>
+                            Tentang Saya
+                        </h3>
+                        <div class="space-y-4 text-slate-600 leading-relaxed">
+                            <p>
+                                Halo! Saya ${profile.name}, seorang pelajar di ${profile.location}. 
+                                Saat ini saya sedang fokus mengembangkan minat saya di bidang teknologi dan desain.
+                            </p>
+                            <p>
+                                Saya percaya bahwa usia muda adalah waktu terbaik untuk eksplorasi. Di sela-sela waktu sekolah, 
+                                saya sering menghabiskan waktu untuk belajar coding dari internet dan mencoba membuat proyek-proyek kecil.
+                                Cita-cita saya adalah menjadi seorang ahli teknologi yang dapat memberikan dampak positif.
+                            </p>
+                            
+                            <h4 class="font-bold text-slate-900 mt-8 mb-4 text-lg">Yang Sedang Saya Pelajari</h4>
+                            <div class="flex flex-wrap gap-2">
+                                ${skillsHtml}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            contentArea.innerHTML = htmlContent;
+            lucide.createIcons(); // Refresh icons for new content
+        }
+
+        // Jalankan saat halaman load
+        window.onload = init;
+
+    </script>
+</body>
 </html>
